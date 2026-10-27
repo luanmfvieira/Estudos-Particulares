@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block title %}Adicionar Venda{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+    <h1 class="h2">➕ Adicionar Nova Venda</h1>
+    <a href="{% url 'dashboard:gerenciar_dados' %}" class="btn btn-secondary">⬅️ Voltar</a>
+</div>
+
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">📝 Formulário de Venda</h6>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="produto" class="form-label">Produto</label>
+                        <input type="text" class="form-control" id="produto" name="produto" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="quantidade" class="form-label">Quantidade</label>
+                        <input type="number" class="form-control" id="quantidade" name="quantidade" min="1" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="preco" class="form-label">Preço (R$)</label>
+                        <input type="number" class="form-control" id="preco" name="preco" step="0.01" min="0" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="data_venda" class="form-label">Data da Venda</label>
+                        <input type="date" class="form-control" id="data_venda" name="data_venda" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="vendedor" class="form-label">Vendedor</label>
+                        <input type="text" class="form-control" id="vendedor" name="vendedor" required>
+                    </div>
+                    
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary">💾 Salvar Venda</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+// Define data atual como padrão
+document.getElementById('data_venda').valueAsDate = new Date();
+</script>
+{% endblock %}

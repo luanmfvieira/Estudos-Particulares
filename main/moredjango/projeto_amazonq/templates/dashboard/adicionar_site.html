@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block title %}Adicionar Site{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+    <h1 class="h2">🌐 Adicionar Novo Site</h1>
+    <a href="{% url 'dashboard:vendas' %}" class="btn btn-secondary">⬅️ Voltar</a>
+</div>
+
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">📝 Dados do Site</h6>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="nome_site" class="form-label">Nome do Site</label>
+                        <input type="text" class="form-control" id="nome_site" name="nome_site" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="valor" class="form-label">Valor (R$)</label>
+                        <input type="number" class="form-control" id="valor" name="valor" step="0.01" min="0" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="descricao" class="form-label">Descrição</label>
+                        <textarea class="form-control" id="descricao" name="descricao" rows="4"></textarea>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="status" class="form-label">Status</label>
+                        <select class="form-control" id="status" name="status" required>
+                            <option value="disponivel">Disponível</option>
+                            <option value="desenvolvimento">Em Desenvolvimento</option>
+                            <option value="vendido">Vendido</option>
+                        </select>
+                    </div>
+                    
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary">💾 Salvar Site</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block title %}Fazer Pedido{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+    <h1 class="h2">📧 Fazer Pedido - {{ site.nome_site }}</h1>
+    <a href="{% url 'dashboard:vendas' %}" class="btn btn-secondary">⬅️ Voltar</a>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="card shadow">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">🌐 Detalhes do Site</h6>
+            </div>
+            <div class="card-body">
+                <h5>{{ site.nome_site }}</h5>
+                <p>{{ site.descricao }}</p>
+                <h4 class="text-primary">R$ {{ site.valor|floatformat:2 }}</h4>
+                <span class="badge bg-success">✅ Disponível</span>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-8">
+        <div class="card shadow">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">📝 Dados do Cliente</h6>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="cliente_nome" class="form-label">Nome Completo</label>
+                        <input type="text" class="form-control" id="cliente_nome" name="cliente_nome" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="cliente_email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="cliente_email" name="cliente_email" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="cliente_telefone" class="form-label">Telefone</label>
+                        <input type="text" class="form-control" id="cliente_telefone" name="cliente_telefone" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="mensagem" class="form-label">Mensagem (Opcional)</label>
+                        <textarea class="form-control" id="mensagem" name="mensagem" rows="4" placeholder="Descreva suas necessidades específicas..."></textarea>
+                    </div>
+                    
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary">📧 Enviar Pedido</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

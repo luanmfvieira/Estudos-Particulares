@@ -1,0 +1,9 @@
+{
+    "nome": "Luan",
+    "idade": 24,
+    "estudante": true,
+    "cursos": [
+        "Python",
+        "JavaScript"
+    ]
+}

@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+
+{% block title %}Lixeira - Funcionários{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+    <h1 class="h2">🗑️ Lixeira - Funcionários Deletados</h1>
+    <a href="{% url 'dashboard:gerenciar_dados' %}" class="btn btn-secondary">⬅️ Voltar</a>
+</div>
+
+<div class="alert alert-warning" role="alert">
+    <strong>⚠️ Atenção:</strong> Funcionários nesta lixeira podem ser restaurados ou excluídos permanentemente.
+</div>
+
+<!-- Tabela de Funcionários Deletados -->
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">🗑️ Funcionários na Lixeira</h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>ID Original</th>
+                        <th>Nome</th>
+                        <th>Email</th>
+                        <th>Cargo</th>
+                        <th>Salário</th>
+                        <th>Data Exclusão</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for funcionario in funcionarios_deletados %}
+                    <tr>
+                        <td>{{ funcionario.id_funcionario_original }}</td>
+                        <td>{{ funcionario.nome }}</td>
+                        <td>{{ funcionario.email }}</td>
+                        <td>{{ funcionario.cargo }}</td>
+                        <td>R$ {{ funcionario.salario|floatformat:2 }}</td>
+                        <td>{{ funcionario.data_exclusao|date:"d/m/Y H:i" }}</td>
+                        <td>
+                            <a href="{% url 'dashboard:restaurar_funcionario' funcionario.id %}" 
+                               class="btn btn-sm btn-success" 
+                               onclick="return confirm('Restaurar funcionário? Se já existir um funcionário com mesmo ID, ele será sobrescrito.')">
+                               ♻️ Restaurar
+                            </a>
+                            <a href="{% url 'dashboard:excluir_permanente' funcionario.id %}" 
+                               class="btn btn-sm btn-danger" 
+                               onclick="return confirm('ATENÇÃO: Esta ação é IRREVERSÍVEL! Excluir permanentemente?')">
+                               ❌ Excluir
+                            </a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="7" class="text-center">
+                            <div class="py-4">
+                                <h5>🎉 Lixeira vazia!</h5>
+                                <p class="text-muted">Nenhum funcionário foi deletado recentemente.</p>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Informações sobre a Lixeira -->
+<div class="card shadow">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">ℹ️ Como funciona a Lixeira</h6>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6">
+                <h6>♻️ Restaurar Funcionário:</h6>
+                <ul>
+                    <li>Funcionário volta para a lista principal</li>
+                    <li>Se já existir funcionário com mesmo ID, será sobrescrito</li>
+                    <li>Todos os dados originais são mantidos</li>
+                </ul>
+            </div>
+            <div class="col-md-6">
+                <h6>❌ Excluir Permanentemente:</h6>
+                <ul>
+                    <li>Remove definitivamente da lixeira</li>
+                    <li>Ação irreversível</li>
+                    <li>Dados não podem ser recuperados</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
